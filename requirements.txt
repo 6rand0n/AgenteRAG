@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+
+langchain
+langchain-community
+langchain-cohere
+
+cohere==5.19.0
+
+faiss-cpu
+
+pypdf
+
+python-dotenv
