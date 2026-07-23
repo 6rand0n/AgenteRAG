@@ -1,0 +1,3 @@
+from app.vectorstore import crear_vectorstore
+
+crear_vectorstore()

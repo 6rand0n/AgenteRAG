@@ -1,0 +1,7 @@
+python -m venv .venv
+.venv\Scripts\activate
+
+pip install -r requirements.txt
+
+dentro del .env 
+	COHERE_API_KEY=tu_api_key_aqui
