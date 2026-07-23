@@ -1,58 +1,64 @@
 from langchain_cohere import ChatCohere
 from langchain_core.prompts import ChatPromptTemplate
 
-from app.config import COHERE_API_KEY
+from app.prompts import PROMPT_RRHH
 from app.vectorstore import cargar_vectorstore
+from app.config import COHERE_API_KEY
 
 
-# Prompt del sistema
-PROMPT = """
-Eres un asistente de Recursos Humanos.
+class RAG:
 
-Responde únicamente utilizando la información del contexto.
+    def __init__(self):
 
-Si la respuesta no aparece en el contexto responde exactamente:
+        self.vectorstore = cargar_vectorstore()
 
-"No encontré esa información en el reglamento."
+        self.retriever = self.vectorstore.as_retriever(
+            search_kwargs={"k": 4}
+        )
 
-Contexto:
-{context}
+        self.llm = ChatCohere(
+            model="command-a-03-2025",
+            temperature=0,
+            cohere_api_key=COHERE_API_KEY
+        )
 
-Pregunta:
-{question}
-"""
+        self.prompt = ChatPromptTemplate.from_template(PROMPT_RRHH)
 
-prompt = ChatPromptTemplate.from_template(PROMPT)
+        self.chain = self.prompt | self.llm
 
+    def preguntar(self, pregunta: str):
 
-def responder(pregunta: str):
+        # Buscar los fragmentos más relevantes
+        documentos = self.retriever.invoke(pregunta)
 
-    vectorstore = cargar_vectorstore()
+        # Construir el contexto
+        contexto = ""
 
-    retriever = vectorstore.as_retriever(
-        search_kwargs={"k": 4}
-    )
+        for i, doc in enumerate(documentos, start=1):
+            pagina = doc.metadata.get("page", "desconocida")
 
-    documentos = retriever.invoke(pregunta)
+            if pagina != "desconocida":
+                pagina += 1
 
-    contexto = "\n\n".join(
-        doc.page_content
-        for doc in documentos
-    )
+            contexto += (
+                f"Fragmento {i} (Página {pagina})\n"
+                f"{doc.page_content}\n\n"
+            )
 
-    llm = ChatCohere(
-        model="command-a-03-2025",
-        cohere_api_key=COHERE_API_KEY,
-        temperature=0
-    )
+        # Obtener páginas únicas utilizadas
+        fuentes = sorted({
+            doc.metadata["page"] + 1
+            for doc in documentos
+            if "page" in doc.metadata
+        })
 
-    chain = prompt | llm
-
-    respuesta = chain.invoke(
-        {
+        # Llamar al modelo
+        respuesta = self.chain.invoke({
             "context": contexto,
             "question": pregunta
-        }
-    )
+        })
 
-    return respuesta.content
+        return {
+            "respuesta": respuesta.content,
+            "fuentes": fuentes
+        }

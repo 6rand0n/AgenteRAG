@@ -1,4 +1,6 @@
-from app.rag import responder
+from app.rag import RAG
+
+rag = RAG()
 
 while True:
 
@@ -7,7 +9,13 @@ while True:
     if pregunta.lower() == "salir":
         break
 
-    respuesta = responder(pregunta)
+    print()
+
+    resultado = rag.preguntar(pregunta)
 
     print("\nRespuesta:\n")
-    print(respuesta)
+    print(resultado["respuesta"])
+    
+    print("\nFuentes:")
+    for pagina in resultado["fuentes"]:
+        print(f"- Página {pagina}")
