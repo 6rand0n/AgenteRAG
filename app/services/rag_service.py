@@ -1,16 +1,18 @@
 from langchain_cohere import ChatCohere
 from langchain_core.prompts import ChatPromptTemplate
 
-from app.prompts import PROMPT_RRHH
-from app.vectorstore import cargar_vectorstore
-from app.config import COHERE_API_KEY
+from app.core.prompts import PROMPT_RRHH
+from app.services.vectorstore_service import VectorStoreService
+from app.core.config import COHERE_API_KEY
 
 
 class RAG:
 
     def __init__(self):
 
-        self.vectorstore = cargar_vectorstore()
+        manager = VectorStoreService()
+
+        self.vectorstore = manager.cargar()
 
         self.retriever = self.vectorstore.as_retriever(
             search_kwargs={"k": 4}

@@ -1,3 +1,3 @@
-from app.vectorstore import crear_vectorstore
+from app.services.vectorstore_service import VectorStoreService
 
-crear_vectorstore()
+VectorStoreService().crear()

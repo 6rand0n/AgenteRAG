@@ -1,4 +1,4 @@
-from app.rag import RAG
+from app.services.rag_service import RAG
 
 rag = RAG()
 
