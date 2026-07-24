@@ -5,7 +5,8 @@ from langchain_community.vectorstores import FAISS
 
 from app.core.config import (
     COHERE_API_KEY,
-    VECTOR_DB_PATH
+    VECTOR_DB_PATH,
+    EMBEDDING_MODEL
 )
 
 from app.services.document_loader import DocumentLoader
@@ -16,7 +17,7 @@ class VectorStoreService:
     def __init__(self):
 
         self.embeddings = CohereEmbeddings(
-            model="embed-v4.0",
+            model=EMBEDDING_MODEL,
             cohere_api_key=COHERE_API_KEY
         )
 

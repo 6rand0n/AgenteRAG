@@ -3,7 +3,11 @@ from langchain_core.prompts import ChatPromptTemplate
 
 from app.core.prompts import PROMPT_RRHH
 from app.services.vectorstore_service import VectorStoreService
-from app.core.config import COHERE_API_KEY
+from app.core.config import (
+    COHERE_API_KEY,
+    CHAT_MODEL,
+    RETRIEVER_K
+)
 
 
 class RAG:
@@ -15,11 +19,11 @@ class RAG:
         self.vectorstore = manager.cargar()
 
         self.retriever = self.vectorstore.as_retriever(
-            search_kwargs={"k": 4}
+            search_kwargs={"k": RETRIEVER_K}
         )
 
         self.llm = ChatCohere(
-            model="command-a-03-2025",
+            model=CHAT_MODEL,
             temperature=0,
             cohere_api_key=COHERE_API_KEY
         )

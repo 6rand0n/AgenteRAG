@@ -15,8 +15,8 @@ class DocumentLoader:
     def dividir(self, documentos):
 
         splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap=200
+            chunk_size=CHUNK_SIZE,
+            chunk_overlap=CHUNK_OVERLAP
         )
 
         return splitter.split_documents(documentos)
