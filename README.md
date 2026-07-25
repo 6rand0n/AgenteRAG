@@ -148,7 +148,7 @@ http://localhost:8000
 
 ## Ejemplo de consulta
 
-![Respuesta](assets/respuesta.png)
+![Respuesta](assets/Respuesta.png)
 
 ## Demostración
 
