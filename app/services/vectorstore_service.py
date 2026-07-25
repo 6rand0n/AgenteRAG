@@ -24,21 +24,21 @@ class VectorStoreService:
     def crear(self):
 
         loader = DocumentLoader()
-
         documentos = loader.cargar()
-
         chunks = loader.dividir(documentos)
-
         vectorstore = FAISS.from_documents(
             chunks,
             self.embeddings
         )
 
         Path(VECTOR_DB_PATH).mkdir(exist_ok=True)
-
         vectorstore.save_local(VECTOR_DB_PATH)
 
     def cargar(self):
+
+        if not Path(VECTOR_DB_PATH).exists():
+            print("Creando índice FAISS por primera vez...")
+            self.crear()
 
         return FAISS.load_local(
             VECTOR_DB_PATH,

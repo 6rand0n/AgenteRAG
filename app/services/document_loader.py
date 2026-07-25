@@ -1,7 +1,11 @@
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from app.core.config import PDF_PATH
+from app.core.config import (
+    PDF_PATH,
+    CHUNK_SIZE,
+    CHUNK_OVERLAP
+)
 
 
 class DocumentLoader:
