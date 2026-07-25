@@ -144,20 +144,26 @@ http://localhost:8000
 
 ## Pantalla principal
 
-*( captura )*
+![Inicio](assets/Inicio.png)
 
 ## Ejemplo de consulta
 
-*( captura )*
+![Respuesta](assets/respuesta.png)
+
+## Demostración
+
+<p align="center">
+  <img src="assets/demo.gif" width="900">
+</p>
 
 # Despliegue
 
-El proyecto fue desplegado utilizando **Oracle Cloud Infrastructure (OCI)** mediante Docker.
+El proyecto fue desplegado utilizando **Render** mediante Docker.
 
 URL de la aplicación:
 
 ```
-https://URL
+https://agenterag.onrender.com/
 ```
 
 # Documento utilizado
