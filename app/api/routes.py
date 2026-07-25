@@ -1,4 +1,7 @@
 from fastapi import APIRouter
+from fastapi import Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
 from app.models.schemas import (
     PreguntaRequest,
@@ -7,18 +10,17 @@ from app.models.schemas import (
 
 from app.services.rag_service import RAG
 
+templates = Jinja2Templates(directory="app/templates")
 router = APIRouter()
-
 rag = RAG()
 
 
-@router.get("/")
-def inicio():
-
-    return {
-        "mensaje": "Agente RRHH funcionando."
-    }
-
+@router.get("/", response_class=HTMLResponse)
+def inicio(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html"
+    )
 
 @router.post(
     "/preguntar",

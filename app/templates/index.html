@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agente RAG RRHH</title>
+
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+
+    <body>
+        <div class="background"></div>
+
+        <div class="container">
+            <div class="info-tecnica">
+                <div><strong>Modelo</strong><br>Cohere Command-A</div>
+                <div><strong>Embeddings</strong><br>Embed-v4</div>
+                <div><strong>Vector DB</strong><br>FAISS</div>
+                <div><strong>Documento</strong><br>Reglamento Interno (19 páginas)</div>
+                <div><strong>Autor</strong><br>Brandon Dávila</div>
+            </div>
+            
+            <div class="card">                
+                <h1>Agente RAG</h1>
+                <h2>Recursos Humanos</h2>
+            
+                <p>
+                    Consulta el reglamento interno de una empresa (ficticia)!
+                </p>
+                <p>
+                    Escribe una pregunta y obtén una respuesta respaldada por el documento.
+                </p>
+            
+                <textarea id="pregunta" placeholder="Ejemplo: Cuántos días de vacaciones corresponden después de un año de trabajo?"> </textarea>
+            
+                <button id="consultar">Consultar </button>
+            
+                <div id="loading"> Consultando... </div>
+            
+                <div id="resultado">
+                    <h3>Respuesta</h3>
+                    <p id="respuesta"></p>
+                    <div id="fuentes"></div>
+                </div>
+            </div>
+        </div>
+
+        <script src="/static/js/app.js"></script>
+    </body>
+</html>

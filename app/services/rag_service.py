@@ -59,12 +59,18 @@ class RAG:
         })
 
         # Llamar al modelo
-        respuesta = self.chain.invoke({
-            "context": contexto,
-            "question": pregunta
-        })
+        try:
+            respuesta = self.chain.invoke({
+                "context": contexto,
+                "question": pregunta
+            })
 
-        return {
-            "respuesta": respuesta.content,
-            "fuentes": fuentes
-        }
+            return {
+                "respuesta": respuesta.content,
+                "fuentes": fuentes
+            }
+        except Exception as e:
+            return {
+                "respuesta": f"Ocurrió un error: {e}",
+                "fuentes":[]
+            }
